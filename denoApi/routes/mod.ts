@@ -1,10 +1,21 @@
+import 'https://deno.land/x/dotenv/load.ts';
+
 import { Router } from 'https://deno.land/x/oak/mod.ts';
 import { oakCors } from 'https://deno.land/x/cors/mod.ts';
 
 import { sendEmail } from '../helpers/mod.ts';
 import { validatePayload, packageResponsePayload } from '../utils/mod.ts';
+const ALLOW_LIST_HOST = [Deno.env.get('ALLOW_LIST_HOST')];
 
 const router = new Router();
+
+const corsOptionsDelegate: CorsOptionsDelegate<Request> = async (request) => {
+  const isOriginAllowed = ALLOW_LIST_HOST.includes(
+    request.headers.get('origin') ?? '',
+  );
+  return { origin: isOriginAllowed }; //  Reflect (enable) the requested origin in the CORS response if isOriginAllowed is true
+};
+
 router.post('/hhc', oakCors(), async (context) => {
   let resp;
   try {
