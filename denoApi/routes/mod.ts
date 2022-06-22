@@ -7,7 +7,7 @@ import { validatePayload, packageResponsePayload } from '../utils/mod.ts';
 const router = new Router();
 router.post(
   '/hhc',
-  oakCors({ origin: ['https://himalayanhc.github.io/'] }),
+  oakCors({ origin: () => ['https://himalayanhc.github.io/'] }),
   async (context) => {
     let resp;
     try {
