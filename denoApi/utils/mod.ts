@@ -12,13 +12,17 @@ export type EVVPayload = {
   missedouttime: string | void;
   dutiesOptions: string;
 };
+type Response = {
+  body: string | null;
+  status: number;
+};
 const validatePayload = (payload: EVVPayload) => {
   // We have a lot to validate
   const response = { isPayloadValid: true, error: null };
   return response;
 };
-const packageResponsePayload = (ctx, message, statusCode = 200) => {
-  ctx.response.body = message;
-  ctx.response.status = statusCode;
-};
+const packageResponsePayload = (message: string | null, statusCode = 200) => ({
+  body: message,
+  status: statusCode,
+});
 export { validatePayload, packageResponsePayload };
