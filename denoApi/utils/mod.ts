@@ -32,7 +32,7 @@ const packageResponsePayload = (message: string | null, statusCode = 200) => ({
 });
 const formatForDisplay = (payload) => {
   let displayText = '';
-  for (const [key, val] of Object.entries(payload)) {
+  for (const [key, val] of Object.entries(JSON.parse(payload))) {
     displayText = `${displayText} 
     ${key}: ${val}`;
   }
