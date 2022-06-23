@@ -30,6 +30,14 @@ const packageResponsePayload = (message: string | null, statusCode = 200) => ({
   body: message,
   status: statusCode,
 });
+const formatForDisplay = (payload) => {
+  let displayText = '';
+  for (const [key, val] of Object.entries(payload)) {
+    displayText = `${displayText} 
+    ${key}: ${val}`;
+  }
+  return displayText;
+};
 const addHumanReadableKeys = (payload) => {
   const fieldsMap = {
     missedevent: 'Missed Event',
@@ -51,4 +59,9 @@ const addHumanReadableKeys = (payload) => {
   }
   return updatedPayload;
 };
-export { validatePayload, packageResponsePayload, addHumanReadableKeys };
+export {
+  validatePayload,
+  packageResponsePayload,
+  addHumanReadableKeys,
+  formatForDisplay,
+};

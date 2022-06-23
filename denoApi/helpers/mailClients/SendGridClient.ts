@@ -1,6 +1,7 @@
 // import sendgridMail from 'https://cdn.skypack.dev/@sendgrid/mail';
 import {
   addHumanReadableKeys,
+  formatForDisplay,
   type EVVPayload,
   type EmailTo,
 } from '../../utils/mod.ts';
@@ -15,13 +16,13 @@ const sendEmail = async (
   try {
     const url = 'https://api.sendgrid.com/v3/mail/send';
     const [{ email: toEmail }] = to;
-    const emailTextString = JSON.stringify(
-      addHumanReadableKeys({
-        ...emailText,
-        employeesignature: emailText.employeename,
-        consumersignature: emailText.consumername,
-      }),
-    );
+    const humanReadablePayload = addHumanReadableKeys({
+      ...emailText,
+      employeesignature: emailText.employeename,
+      consumersignature: emailText.consumername,
+    });
+    const emailTextString = JSON.stringify(humanReadablePayload);
+
     const emailPayload = {
       from: { email: from, name: 'Himalayan Health Care - EVV' },
       personalizations: [
@@ -33,11 +34,11 @@ const sendEmail = async (
       content: [
         {
           type: 'text/plain',
-          value: emailTextString,
+          value: formatForDisplay(emailTextString),
         },
         {
           type: 'text/html',
-          value: `<pre>${emailTextString}</pre>`,
+          value: `<pre>${formatForDisplay(emailTextString)}</pre>`,
         },
       ],
     };
