@@ -30,4 +30,25 @@ const packageResponsePayload = (message: string | null, statusCode = 200) => ({
   body: message,
   status: statusCode,
 });
-export { validatePayload, packageResponsePayload };
+const addHumanReadableKeys = (payload) => {
+  const fieldsMap = {
+    missedevent: 'Missed Event',
+    reasonmissed: 'Other Reason',
+    consumername: 'Consumer Name',
+    employeename: 'Employee Name',
+    employeepin: 'Employee PIN',
+    consumerpin: 'Consumer PIN',
+    employeesignature: 'Employee Signature',
+    consumersignature: 'Consumer Signature',
+    dutiesOptions: 'Duties Performed',
+    misseddate: 'Missed Date',
+    missedintime: 'Missed In Time',
+    missedouttime: 'Missed Out Time',
+  };
+  const updatedPayload = {};
+  for (const [key, val] of Object.entries(payload)) {
+    updatedPayload[fieldsMap[key]] = val;
+  }
+  return updatedPayload;
+};
+export { validatePayload, packageResponsePayload, addHumanReadableKeys };
