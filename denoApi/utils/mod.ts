@@ -40,6 +40,8 @@ const formatForDisplay = (payload) => {
 };
 const addHumanReadableKeys = (payload) => {
   const fieldsMap = {
+    employeeagree: 'Employee Consent',
+    consumeragree: 'Consumer Consent',
     missedevent: 'Missed Event',
     reasonmissed: 'Other Reason',
     consumername: 'Consumer Name',
