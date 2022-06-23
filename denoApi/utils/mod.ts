@@ -12,6 +12,11 @@ export type EVVPayload = {
   missedouttime: string | void;
   dutiesOptions: string;
 };
+export type EmailTo = {
+  email: string;
+  type: string;
+};
+
 type Response = {
   body: string | null;
   status: number;

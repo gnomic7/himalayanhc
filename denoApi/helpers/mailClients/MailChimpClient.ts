@@ -1,22 +1,20 @@
-import 'https://deno.land/x/dotenv/load.ts';
-
 import mailchimpMailchimpTransactional from 'https://cdn.skypack.dev/@mailchimp/mailchimp_transactional';
-const { SEND_EMAIL, MAILCHIMP_API_KEY, RECV_EMAIL } = Deno.env.toObject();
-import type { EVVPayload } from '../../utils/mod.ts';
+import type { EVVPayload, EmailTo } from '../../utils/mod.ts';
 
-const sendEmail = async (subject: string, emailText: EVVPayload) => {
+const sendEmail = async (
+  subject: string,
+  emailText: EVVPayload,
+  to: EmailTo[],
+  from: string,
+  apiKey: string,
+) => {
   try {
-    const mailchimp = mailchimpMailchimpTransactional(MAILCHIMP_API_KEY);
+    const mailchimp = mailchimpMailchimpTransactional(apiKey);
     const message = {
-      from_email: SEND_EMAIL,
+      from_email: from,
       subject,
       text: JSON.stringify(emailText),
-      to: [
-        {
-          email: RECV_EMAIL,
-          type: 'to',
-        },
-      ],
+      to,
     };
     console.log({ message });
     await mailchimp.messages.send({
