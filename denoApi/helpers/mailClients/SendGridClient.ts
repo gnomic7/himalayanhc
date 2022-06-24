@@ -50,6 +50,7 @@ const sendEmail = async (
       },
       body: JSON.stringify(emailPayload),
     });
+    console.log('Email Sent Successfully');
     return { error: null, message: 'Email sent successfully!' };
   } catch (error) {
     console.log(error);
